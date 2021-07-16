@@ -22,6 +22,11 @@ android {
         buildConfigField "String", "naver_client_secret", properties['naver_client_secret']
     }
 
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
