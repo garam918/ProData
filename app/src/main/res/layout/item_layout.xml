@@ -9,6 +9,8 @@
     </data>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_corner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +24,7 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:text="@{item.description}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
