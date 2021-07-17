@@ -21,7 +21,7 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
     val proData = ObservableArrayList<ItemInfoData>()
 
     fun search() {
-        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "주식")
+        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "영화")
             .enqueue(
                 object : Callback<ResponseData> {
                     override fun onFailure(call: Call<ResponseData>, t: Throwable) {
@@ -35,7 +35,11 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
                         val res = response.body()!!
                         val size = res.display
                         repeat(size) {
-                            proData.add(ItemInfoData(res.items[it].title,res.items[it].link,res.items[it].description))
+                            val title = res.items[it].title.replace("&lt;","<").replace("&gt;",">")
+                                .replace("<b>","").replace("</b>","")
+                            val description = res.items[it].description.replace("&lt;","<").replace("&gt;",">")
+                                .replace("<b>","").replace("</b>","")
+                            proData.add(ItemInfoData(title,res.items[it].link,description))
                         }
                     }
                 })
