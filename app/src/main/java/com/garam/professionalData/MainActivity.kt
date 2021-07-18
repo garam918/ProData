@@ -22,7 +22,5 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = proDataViewModel
 
-        proDataViewModel.search()
-
     }
 }

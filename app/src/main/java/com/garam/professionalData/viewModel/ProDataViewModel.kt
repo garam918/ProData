@@ -3,6 +3,7 @@ package com.garam.professionalData.viewModel
 import android.app.Application
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.garam.professionalData.BuildConfig
 import com.garam.professionalData.data.ItemInfoData
 import com.garam.professionalData.data.ResponseData
@@ -18,10 +19,11 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
         NetworkController.instance.networkService
     }
 
+    val searchWord = MutableLiveData<String>()
     val proData = ObservableArrayList<ItemInfoData>()
 
     fun search() {
-        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, "영화")
+        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, searchWord.value.toString())
             .enqueue(
                 object : Callback<ResponseData> {
                     override fun onFailure(call: Call<ResponseData>, t: Throwable) {
@@ -44,5 +46,4 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
                     }
                 })
     }
-
 }
