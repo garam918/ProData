@@ -2,6 +2,7 @@ package com.garam.professionalData.viewModel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,8 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
         NetworkController.instance.networkService
     }
 
+    private val context = application.applicationContext
+
     val searchWord = MutableLiveData<String>()
     val proData = ObservableArrayList<ItemInfoData>()
 
@@ -39,13 +42,20 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
                         response: Response<ResponseData>
                     ) {
                         val res = response.body()!!
-                        val size = res.display
-                        repeat(size) {
-                            val title = res.items[it].title.replace("&lt;","<").replace("&gt;",">")
-                                .replace("<b>","").replace("</b>","")
-                            val description = res.items[it].description.replace("&lt;","<").replace("&gt;",">")
-                                .replace("<b>","").replace("</b>","")
-                            proData.add(ItemInfoData(title,res.items[it].link,description))
+                        if(res.total == 0) {
+                            Toast.makeText(context,"검색된 데이터가 없습니다",Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            val size = res.display
+                            repeat(size) {
+                                val title =
+                                    res.items[it].title.replace("&lt;", "<").replace("&gt;", ">")
+                                        .replace("<b>", "").replace("</b>", "")
+                                val description = res.items[it].description.replace("&lt;", "<")
+                                    .replace("&gt;", ">")
+                                    .replace("<b>", "").replace("</b>", "") + " ..."
+                                proData.add(ItemInfoData(title, res.items[it].link, description))
+                            }
                         }
                     }
                 })
