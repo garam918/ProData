@@ -30,7 +30,8 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
 
     fun search(recyclerView: RecyclerView) {
         (recyclerView.adapter as RecyclerAdapter).items.clear()
-        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, searchWord.value.toString())
+        networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, searchWord.value.toString(),
+        100,1)
             .enqueue(
                 object : Callback<ResponseData> {
                     override fun onFailure(call: Call<ResponseData>, t: Throwable) {
