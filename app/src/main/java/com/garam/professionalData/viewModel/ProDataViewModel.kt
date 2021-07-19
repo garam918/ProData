@@ -1,10 +1,13 @@
 package com.garam.professionalData.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
 import com.garam.professionalData.BuildConfig
+import com.garam.professionalData.adapter.RecyclerAdapter
 import com.garam.professionalData.data.ItemInfoData
 import com.garam.professionalData.data.ResponseData
 import com.garam.professionalData.network.NetworkController
@@ -22,7 +25,8 @@ class ProDataViewModel(application: Application) : AndroidViewModel(application)
     val searchWord = MutableLiveData<String>()
     val proData = ObservableArrayList<ItemInfoData>()
 
-    fun search() {
+    fun search(recyclerView: RecyclerView) {
+        (recyclerView.adapter as RecyclerAdapter).items.clear()
         networkService.search(BuildConfig.naver_client_id, BuildConfig.naver_client_secret, searchWord.value.toString())
             .enqueue(
                 object : Callback<ResponseData> {

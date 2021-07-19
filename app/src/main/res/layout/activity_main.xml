@@ -31,7 +31,7 @@
 
             <Button
                 android:text="검색"
-                android:onClick="@{() -> viewModel.search()}"
+                android:onClick="@{() -> viewModel.search(recycler)}"
                 android:layout_weight="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -43,6 +43,7 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
                 itemList="@{viewModel.proData}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
